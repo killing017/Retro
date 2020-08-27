@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -27,7 +28,8 @@ public class Login extends AppCompatActivity {
 EditText email,password;
 TextView t1;
 Button b1;
-private List<Result> resultList;
+//private List<Result> resultList;
+
     String  stremail, strpassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,13 @@ private List<Result> resultList;
         call.enqueue(new Callback<LoginData>() {
             @Override
             public void onResponse(Call<LoginData> call, Response<LoginData> response) {
-              //  JsonReader.setLenient="true";
-                resultList=response.body().getResult();
-
-//               t1.setText((CharSequence) resultList);
-           //   Toast.makeText(Login.this, (CharSequence) resultList, Toast.LENGTH_SHORT).show();
+              ArrayList<Result> loginData=response.body().getResult();
+              for(int i=0;i<loginData.size();i++){
+                  String id=loginData.get(i).getId();
+                  String name=loginData.get(i).getName();
+                  Toast.makeText(Login.this,name, Toast.LENGTH_SHORT).show();
+              }
+            // Toast.makeText(Login.this, loginData, Toast.LENGTH_SHORT).show();
                 Toast.makeText(Login.this, "sucess", Toast.LENGTH_SHORT).show();
                /* if(data h){
                     Toast.makeText(Login.this, "success", Toast.LENGTH_SHORT).show();
